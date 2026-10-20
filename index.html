@@ -1,0 +1,88 @@
+<!doctype html>
+<html lang="en" dir="ltr">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#0b1020">
+  <meta name="description" content="ILyas Network Tools — free IPv4 subnet calculator, network troubleshooting guide, and networking quiz.">
+  <title>ILyas Network Tools</title>
+  <link rel="icon" href="assets/favicon.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="styles.css">
+  <script src="app.js" defer></script>
+</head>
+<body>
+  <div class="ambient ambient-one"></div><div class="ambient ambient-two"></div>
+  <header class="topbar">
+    <a class="brand" href="#" aria-label="ILyas Network Tools home">
+      <span class="brand-mark">N<span>.</span></span>
+      <span><strong>ILyas</strong><small>NETWORK TOOLS</small></span>
+    </a>
+    <div class="top-actions">
+      <span class="status"><i></i><span data-i18n="browserOnly">Runs in your browser</span></span>
+      <button id="langToggle" class="lang-toggle" type="button" aria-label="Switch language">العربية</button>
+    </div>
+  </header>
+
+  <main class="shell">
+    <section class="hero">
+      <div class="eyebrow"><span class="eyebrow-line"></span><span data-i18n="eyebrow">NETWORKING TOOLKIT · FREE & OPEN</span></div>
+      <h1><span data-i18n="heroA">Understand your network.</span><br><span class="gradient-text" data-i18n="heroB">Solve it with confidence.</span></h1>
+      <p class="hero-copy" data-i18n="heroCopy">Practical tools for students, IT beginners, and network enthusiasts. No account. No backend. Just useful tools.</p>
+      <div class="hero-meta"><span>IPv4 / CIDR</span><span>Windows + Linux</span><span>Interactive learning</span></div>
+    </section>
+
+    <nav class="tool-nav" aria-label="Tools">
+      <button class="nav-item active" data-tab="subnet" type="button"><span class="nav-icon">⌘</span><span data-i18n="navSubnet">Subnet Calculator</span></button>
+      <button class="nav-item" data-tab="troubleshoot" type="button"><span class="nav-icon">⌁</span><span data-i18n="navTrouble">Troubleshooting</span></button>
+      <button class="nav-item" data-tab="quiz" type="button"><span class="nav-icon">✳</span><span data-i18n="navQuiz">Networking Quiz</span></button>
+    </nav>
+
+    <section id="panel-subnet" class="tool-panel active">
+      <div class="section-heading">
+        <div><div class="kicker" data-i18n="tool01">TOOL 01</div><h2 data-i18n="subnetTitle">IPv4 Subnet Calculator</h2><p data-i18n="subnetDesc">Enter an IPv4 address and prefix to calculate its subnet details.</p></div>
+        <span class="pill">IPv4 · CIDR</span>
+      </div>
+      <form id="subnetForm" class="calculator-form">
+        <label class="field"><span data-i18n="ipLabel">IPv4 address</span><input id="ipInput" type="text" value="192.168.1.25" autocomplete="off" spellcheck="false" placeholder="192.168.1.25" required><small data-i18n="ipHint">Example: 192.168.1.25</small></label>
+        <label class="field"><span data-i18n="prefixLabel">CIDR prefix</span><select id="prefixInput"></select><small data-i18n="prefixHint">Choose a prefix from /0 to /32</small></label>
+        <button class="primary-btn" type="submit"><span data-i18n="calculateBtn">Calculate subnet</span><span aria-hidden="true">↗</span></button>
+      </form>
+      <div id="subnetError" class="message error" role="alert" hidden></div>
+      <div id="subnetResults" class="results" aria-live="polite"></div>
+      <p class="footnote" data-i18n="subnetNote">Usable host counts use conventional IPv4 subnet rules. /31 and /32 have special point-to-point/host use cases.</p>
+    </section>
+
+    <section id="panel-troubleshoot" class="tool-panel">
+      <div class="section-heading">
+        <div><div class="kicker" data-i18n="tool02">TOOL 02</div><h2 data-i18n="troubleTitle">Network Troubleshooting</h2><p data-i18n="troubleDesc">Pick a symptom to see a safe, practical diagnostic path.</p></div>
+        <span class="pill" data-i18n="guided">GUIDED</span>
+      </div>
+      <div class="symptom-grid" id="symptomGrid">
+        <button class="symptom-card selected" data-symptom="internet" type="button"><span class="symptom-icon">◎</span><strong data-i18n="symInternet">No internet access</strong><small data-i18n="symInternetSub">Can't reach websites</small><span class="card-arrow">↗</span></button>
+        <button class="symptom-card" data-symptom="dns" type="button"><span class="symptom-icon">⌕</span><strong data-i18n="symDns">DNS problem</strong><small data-i18n="symDnsSub">IP works, names fail</small><span class="card-arrow">↗</span></button>
+        <button class="symptom-card" data-symptom="wifi" type="button"><span class="symptom-icon">⌁</span><strong data-i18n="symWifi">Wi-Fi connection</strong><small data-i18n="symWifiSub">Can't join the network</small><span class="card-arrow">↗</span></button>
+        <button class="symptom-card" data-symptom="slow" type="button"><span class="symptom-icon">◷</span><strong data-i18n="symSlow">Slow connection</strong><small data-i18n="symSlowSub">High latency or low speed</small><span class="card-arrow">↗</span></button>
+      </div>
+      <div id="troubleDetails" class="trouble-details"></div>
+      <p class="footnote" data-i18n="safeNote">Commands shown here are diagnostic. Results vary by network and firewall policy. Only troubleshoot systems you are authorized to use.</p>
+    </section>
+
+    <section id="panel-quiz" class="tool-panel">
+      <div class="section-heading">
+        <div><div class="kicker" data-i18n="tool03">TOOL 03</div><h2 data-i18n="quizTitle">Networking Quiz</h2><p data-i18n="quizDesc">Test your fundamentals. Learn from every answer.</p></div>
+        <span class="pill" data-i18n="quizLevel">BEGINNER</span>
+      </div>
+      <div class="quiz-topline"><span id="quizProgressText">Question 1 of 8</span><div class="progress-track"><div id="quizProgress" class="progress-fill"></div></div><span id="quizScoreLabel">Score: 0</span></div>
+      <div id="quizCard" class="quiz-card"></div>
+      <div class="quiz-actions"><button id="quizNext" class="primary-btn" type="button" disabled><span data-i18n="nextQuestion">Next question</span><span aria-hidden="true">→</span></button><button id="quizRestart" class="secondary-btn" type="button" hidden data-i18n="tryAgain">Try again</button></div>
+    </section>
+
+    <section class="bottom-callout">
+      <div class="callout-symbol">↗</div><div><strong data-i18n="calloutTitle">Built for learning by doing.</strong><p data-i18n="calloutCopy">A growing open-source project. Explore the code, suggest improvements, and build your networking skills.</p></div>
+      <a href="https://github.com/ILyasZobair/network-fundamentals-lab" target="_blank" rel="noopener noreferrer" class="github-link"><span data-i18n="viewGithub">View GitHub</span> ↗</a>
+    </section>
+    <footer><span>© <span id="year"></span> ILyas Network Tools</span><span data-i18n="footerText">Made for curious minds · Free to use</span></footer>
+  </main>
+  <div id="toast" class="toast" role="status" aria-live="polite"></div>
+</body>
+</html>
